@@ -8,9 +8,12 @@ import {
 } from "react-router-dom";
 
 import HomeLayout from "./Layouts/HomeLayout";
+import Layout from "./Layouts/Layout";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import StudentRegister from "./components/StudentRegister";
+import TeacherRegister from "./components/TeacherRegister";
 import RequireAuth from "./components/RequireAuth";
 import Student from "./components/Student";
 import Teacher from "./components/Teacher";
@@ -56,7 +59,11 @@ function App() {
         <Route path="/" exact element={<HomeLayout />}>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Layout />}>
+            <Route index element={<Signup />} />
+            <Route path="studentRegister" element={<StudentRegister />} />
+            <Route path="teacherRegister" element={<TeacherRegister />} />
+          </Route>
         </Route>
       </Routes>
     </>

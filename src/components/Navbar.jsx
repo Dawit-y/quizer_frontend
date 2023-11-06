@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import DropdownMenu from "./DropdownMenu";
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -30,7 +31,7 @@ export default function Navbar(props) {
             type="button"
             onClick={() => setNavbarOpen(!navbarOpen)}
           >
-            <i className={"text-gray-800 fas fa-bars"}></i>
+            <i className="text-gray-800 fas fa-bars"></i>
           </button>
         </div>
         <div
@@ -40,7 +41,7 @@ export default function Navbar(props) {
           }
           id="example-navbar-warning"
         >
-          <ul className="flex flex-col lg:flex-row list-none mr-auto">
+          {/* <ul className="flex flex-col lg:flex-row list-none mr-auto">
             <li className="flex items-center">
               <a
                 className={
@@ -59,7 +60,7 @@ export default function Navbar(props) {
                 {user ? user.user_name : ""}
               </a>
             </li>
-          </ul>
+          </ul> */}
           <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
             <li className="flex items-center">
               <a
@@ -113,6 +114,7 @@ export default function Navbar(props) {
                   " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                 }
                 href="#pablo"
+                onClick={logout}
               >
                 <i
                   className={
@@ -121,39 +123,44 @@ export default function Navbar(props) {
                       : "text-gray-500") + " fab fa-github text-lg leading-lg "
                   }
                 />
-                <span className="lg:hidden inline-block ml-2">Star</span>
+                <span className="lg:hidden inline-block ml-2">Logout</span>
               </a>
             </li>
 
-            <li className="flex items-center">
-              <Link to="login">
-                <button
-                  className={
-                    (props.transparent
-                      ? "bg-white text-gray-800 active:bg-gray-100"
-                      : "bg-pink-500 text-white active:bg-pink-600") +
-                    " text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
-                  }
-                  type="button"
-                  style={{ transition: "all .15s ease" }}
-                >
-                  <i className="fas fa-arrow-alt-circle-down"></i>Login
-                </button>
-              </Link>
-              <button
-                className={
-                  (props.transparent
-                    ? "bg-white text-gray-800 active:bg-gray-100"
-                    : "bg-pink-500 text-white active:bg-pink-600") +
-                  " text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
-                }
-                type="button"
-                style={{ transition: "all .15s ease" }}
-                onClick={logout}
-              >
-                <i className="fas fa-arrow-alt-circle-down"></i> logout
-              </button>
-            </li>
+            {user ? (
+              <DropdownMenu />
+            ) : (
+              <li className="flex items-center">
+                <Link to="login">
+                  <button
+                    className={
+                      (props.transparent
+                        ? "bg-white text-gray-800 active:bg-gray-100"
+                        : "bg-pink-500 text-white active:bg-pink-600") +
+                      " text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
+                    }
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                  >
+                    <i className="fas fa-arrow-alt-circle-down"></i>Login
+                  </button>
+                </Link>
+                <Link to="signup">
+                  <button
+                    className={
+                      (props.transparent
+                        ? "bg-white text-gray-800 active:bg-gray-100"
+                        : "bg-pink-500 text-white active:bg-pink-600") +
+                      " text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
+                    }
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                  >
+                    <i className="fas fa-arrow-alt-circle-down"></i> Signup
+                  </button>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

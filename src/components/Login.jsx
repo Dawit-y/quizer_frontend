@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import github from "../assets/github.svg";
+import google from "../assets/google.svg";
 
 export default function Login() {
   const [data, setData] = useState([]);
@@ -41,11 +43,7 @@ export default function Login() {
                         type="button"
                         style={{ transition: "all .15s ease" }}
                       >
-                        <img
-                          alt="..."
-                          className="w-5 mr-1"
-                          src={"assets/img/github.svg"}
-                        />
+                        <img alt="..." className="w-5 mr-1" src={github} />
                         Github
                       </button>
                       <button
@@ -53,11 +51,7 @@ export default function Login() {
                         type="button"
                         style={{ transition: "all .15s ease" }}
                       >
-                        <img
-                          alt="..."
-                          className="w-5 mr-1"
-                          src={"assets/img/google.svg"}
-                        />
+                        <img alt="..." className="w-5 mr-1" src={google} />
                         Google
                       </button>
                     </div>
@@ -76,11 +70,11 @@ export default function Login() {
                           Email
                         </label>
                         <input
-                          type="text"
+                          type="email"
                           onChange={handleChange}
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                           placeholder="Email"
-                          name="username"
+                          name="email"
                           style={{ transition: "all .15s ease" }}
                         />
                       </div>

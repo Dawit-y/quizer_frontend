@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
@@ -12,12 +12,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  async function login({ username, password }) {
+  async function login({ email, password }) {
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/auth/jwt/create/",
         {
-          username,
+          email,
           password,
         },
         {
@@ -41,6 +41,36 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  async function registerUser(user, image, role) {
+    console.log(user, image);
+    try {
+      const formData = new FormData();
+      for (let i = 0; i < Object.keys(user).length; i++) {
+        formData.append(`user.${Object.keys(user)[i]}`, Object.values(user)[i]);
+      }
+      formData.append("image", image);
+      const formDataObject = Object.fromEntries(formData);
+      console.log(formDataObject);
+
+      const url = role === "student" ? "students/" : "teachers/";
+
+      const response = await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (response.status === 201) {
+        const data = {
+          email: user.email,
+          password: user.password,
+        };
+        console.log("success", data);
+        login(data);
+      }
+    } catch {
+      console.log("catched");
+    }
+  }
   async function updateToken() {
     try {
       const response = await axios.post(
@@ -99,7 +129,7 @@ export const AuthProvider = ({ children }) => {
   }, [authToken]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, registerUser }}>
       {loading ? <Loading /> : children}
     </AuthContext.Provider>
   );
