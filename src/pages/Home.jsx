@@ -1,6 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Home = () => {
+  const { user } = useAuth();
+
+  const handleGetstarted = () => {};
+
   return (
     <>
       <main>
@@ -108,31 +114,28 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center mt-32">
+            <div className="flex flex-wrap items-start mt-32">
               <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
-                <div className="text-gray-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-gray-100">
-                  <i className="fas fa-user-friends text-xl"></i>
+                <div className="bg-transparent">
+                  <div className="text-center w-full mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 z-20">
+                    <h2 className="text-3xl font-extrabold text-black dark:text-gray-600 sm:text-4xl">
+                      <span className="block">Want to create exam ?</span>
+                    </h2>
+                    <div className="lg:mt-0 lg:flex-shrink-0">
+                      <div className="mt-12 inline-flex rounded-md shadow">
+                        <Link to="dashboard">
+                          <button
+                            type="button"
+                            className="py-4 px-6  bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                            onClick={handleGetstarted}
+                          >
+                            Get started
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-3xl mb-2 font-semibold leading-normal">
-                  Working with us is a pleasure
-                </h3>
-                <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
-                  Don't let your uses guess by attaching tooltips and popoves to
-                  any element. Just make sure you enable them first via
-                  JavaScript.
-                </p>
-                <p className="text-lg font-light leading-relaxed mt-0 mb-4 text-gray-700">
-                  The kit comes with three pre-built pages to help you get
-                  started faster. You can change the text and images and you're
-                  good to go. Just make sure you enable them first via
-                  JavaScript.
-                </p>
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/presentation"
-                  className="font-bold text-gray-800 mt-8"
-                >
-                  Check Tailwind Starter Kit!
-                </a>
               </div>
 
               <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
@@ -173,7 +176,7 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="relative py-20">
+        {/* <section className="relative py-20">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
             style={{ height: "80px" }}
@@ -260,9 +263,9 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section className="pt-20 pb-48">
+        {/* <section className="pt-20 pb-48">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center text-center mb-24">
               <div className="w-full lg:w-6/12 px-4">
@@ -421,7 +424,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section className="pb-20 relative block bg-gray-900">
           <div

@@ -12,6 +12,40 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const googleAuthenticate = async (state, code) => {
+    if (state && code && !localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+
+      const details = {
+        state: state,
+        code: code,
+      };
+
+      const formBody = Object.keys(details)
+        .map(
+          (key) =>
+            encodeURIComponent(key) + "=" + encodeURIComponent(details[key])
+        )
+        .join("&");
+
+      try {
+        const res = await axios.post(
+          `/auth/o/google-oauth2/?${formBody}`,
+          config
+        );
+
+        console.log("success", res);
+      } catch (err) {
+        console.log("fail", res);
+      }
+    }
+  };
+
   async function login({ email, password }) {
     try {
       const response = await axios.post(
@@ -41,18 +75,18 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  async function registerUser(user, image, role) {
+  async function registerUser(user, image) {
     console.log(user, image);
     try {
       const formData = new FormData();
       for (let i = 0; i < Object.keys(user).length; i++) {
-        formData.append(`user.${Object.keys(user)[i]}`, Object.values(user)[i]);
+        formData.append(`${Object.keys(user)[i]}`, Object.values(user)[i]);
       }
       formData.append("image", image);
       const formDataObject = Object.fromEntries(formData);
       console.log(formDataObject);
 
-      const url = role === "student" ? "students/" : "teachers/";
+      const url = "auth/users/";
 
       const response = await axios.post(url, formData, {
         headers: {
@@ -129,7 +163,9 @@ export const AuthProvider = ({ children }) => {
   }, [authToken]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, registerUser }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, registerUser, googleAuthenticate }}
+    >
       {loading ? <Loading /> : children}
     </AuthContext.Provider>
   );

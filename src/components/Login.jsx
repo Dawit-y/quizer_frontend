@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import github from "../assets/github.svg";
@@ -15,18 +16,32 @@ export default function Login() {
     console.log(data);
     login(data);
   };
+
+  const continueWithGoogle = async () => {
+    try {
+      console.log("continue with ggogle");
+      const config = {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+      const res = await axios.get(
+        `auth/o/google-oauth2/?redirect_uri=${
+          import.meta.env.VITE_REDIRECT_URI
+        }`
+      );
+
+      window.location.replace(res.data.authorization_url);
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
   return (
     <>
       <main>
         <section className="mt-16 w-full h-full index-50 ">
-          {/* <div
-            className="absolute top-0 w-full h-full bg-gray-900"
-            style={{
-              backgroundImage: "assets/img/register_bg_2.png",
-              backgroundSize: "100%",
-              backgroundRepeat: "no-repeat",
-            }}
-          ></div> */}
           <div className="container mx-auto px-4 h-full">
             <div className="flex content-center items-center justify-center h-full">
               <div className="w-full lg:w-4/12 px-4 h-full shadow-lg rounded-lg bg-gray-300">
@@ -50,6 +65,7 @@ export default function Login() {
                         className="bg-white active:bg-gray-100 text-gray-800  px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs"
                         type="button"
                         style={{ transition: "all .15s ease" }}
+                        onClick={continueWithGoogle}
                       >
                         <img alt="..." className="w-5 mr-1" src={google} />
                         Google
