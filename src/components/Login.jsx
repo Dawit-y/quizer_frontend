@@ -21,18 +21,16 @@ export default function Login() {
     try {
       console.log("continue with ggogle");
       const config = {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        withCredentials: true,
       };
       const res = await axios.get(
         `auth/o/google-oauth2/?redirect_uri=${
           import.meta.env.VITE_REDIRECT_URI
-        }`
+        }`,
+        config
       );
 
-      window.location.replace(res.data.authorization_url);
+      window.location.href = res.data.authorization_url;
     } catch (err) {
       console.log("error", err);
     }
