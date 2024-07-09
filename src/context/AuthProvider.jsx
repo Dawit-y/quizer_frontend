@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
         console.log("success", res);
       } catch (err) {
         console.log("fail", res);
+        console.log("login failed try again");
       }
     }
   };
